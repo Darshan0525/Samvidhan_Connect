@@ -1,0 +1,95 @@
+/* Container */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2.text-center {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Search Form */
+.search-container {
+    margin-bottom: 30px;
+}
+
+.search-input {
+    padding: 10px;
+    width: 250px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* Appointment Cards */
+.appointment-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.appointment-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.appointment-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.appointment-card p {
+    margin: 5px 0;
+}
+
+/* Book Now Button */
+.book-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.book-button:hover {
+    background-color: #218838;
+}
+
+/* No Slots Available */
+.no-slots {
+    text-align: center;
+    font-size: 18px;
+    color: #999;
+    margin-top: 30px;
+}

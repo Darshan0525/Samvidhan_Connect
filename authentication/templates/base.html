@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samvidhan Connect</title>
+    <!-- Google Fonts for Icons and Styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+</head>
+<body>
+    {% block navbar %}
+    <header>
+        <nav class="navbar">
+            <span class="hamburger-btn material-symbols-rounded">menu</span>
+            <a href="#" class="logo">
+                <img src="{% static 'images/Logo.png' %}" alt="logo">
+                <h2>Samvidhan Connect</h2>
+            </a>
+            <ul class="links">
+                <span class="close-btn material-symbols-rounded">close</span>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="/auth/contact">Contact us</a></li>
+            </ul>
+            <span>
+              {% if request.user.is_authenticated %}
+              <a href="/auth/logout" class="login-btn">Logout</a>
+              {% else %}
+              <a href="/auth/login" class="login-btn">Login</a>
+              {% endif %}
+            </span>
+        </nav>
+    </header>
+    {% endblock %}
+
+    {% block content %}
+    <div class="content">
+        <!-- Dynamic page content -->
+    </div>
+    {% endblock %}
+</body>
+</html>

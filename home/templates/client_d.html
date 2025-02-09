@@ -1,0 +1,199 @@
+{% extends 'sidebar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %} <title>Appointments</title> {% endblock %}
+    {% load static %}
+    {% block content %}
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            min-height: 100vh;
+            background: #ecf0f3;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        .text-center {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #31344b;
+            text-shadow: -1px -1px 2px #ffffff, 1px 1px 2px #ceced1;
+        }
+        .search-container {
+            margin-bottom: 30px;
+        }
+        .search-container form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .search-input {
+            width: 60%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: inset -3px -3px 7px #ffffff, inset 3px 3px 5px #ceced1;
+            outline: none;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+            transition: background 0.3s ease;
+        }
+        .search-button:hover {
+            background: #0056b3
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .wrapper {
+            position: relative;
+            width: 290px; /* Adjusted width */
+            padding: 25px; /* Reduced padding */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #ecf0f3;
+            box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+        }
+        .img-area {
+            height: 100px; /* Adjusted size */
+            width: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .inner-area {
+            height: calc(100% - 15px);
+            width: calc(100% - 15px);
+            border-radius: 50%;
+        }
+        .inner-area img {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #31344b;
+            margin: 10px 0 5px 0;
+        }
+        .about {
+            color: #44476a;
+            font-weight: 400;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .social-icons {
+            margin: 10px 0 15px 0;
+        }
+        .social-icons a {
+            position: relative;
+            height: 30px;
+            width: 30px;
+            margin: 0 5px;
+            display: inline-flex;
+            text-decoration: none;
+            border-radius: 50%;
+        }
+        .buttons {
+            margin-top: 15px;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 100%; /* Fixed width for buttons */
+            border: none;
+            outline: none;
+            padding: 12px 6px; /* Reduced padding */
+            color: #31344b;
+            font-size: 14px;
+            font-weight: 400;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: -2px -2px 5px #ffffff, 2px 2px 4px #ceced1;
+        }
+        .buttons button:hover {
+        background: #007bff;
+        color: #ffffff;
+        box-shadow: -3px -3px 7px #ffffff, 3px 3px 7px #31344b;
+        transform: translateY(-2px);
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Available Appointment Slots</h2>
+        <div class="search-container">
+            <form method="get" action="">
+                <input type="text" name="specialization" placeholder="Search by specialization" value="{{ request.GET.specialization }}" class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="card-container">
+        {% for slot_data in slots_with_profiles %}
+        <div class="wrapper">
+            <div class="img-area">
+                <div class="inner-area">
+                    <img src="{{ slot_data.profile_picture }}" alt="Profile Image">
+                </div>
+            </div>
+            <div class="name">{{ slot_data.slot.lawyer.username }}</div>
+            <div class="about">{{ slot_data.slot.specialization }}</div>
+            <div class="about">Date: {{ slot_data.slot.date }}</div>
+            <div class="about">Time: {{ slot_data.slot.start_time }} - {{ slot_data.slot.end_time }}</div>
+            <div class="about">Price: {{ slot_data.slot.amount }} INR</div>
+            <div class="buttons">
+                <a href="{% url 'Viewlaweyerp' username=slot_data.slot.lawyer.username %}" class="view-profile-button">
+                    <button>View Profile</button>
+                </a>
+                <form method="post" action="{% url 'create-checkout-session' %}" style="margin: 0;">
+                    {% csrf_token %}
+                    <input type="hidden" name="slot_id" value="{{ slot_data.slot.id }}">
+                    <button type="submit">Book Appointment</button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="container">
+            <p>No available slots.</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

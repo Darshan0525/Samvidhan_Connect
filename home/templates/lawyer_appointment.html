@@ -1,0 +1,219 @@
+{% extends 'sidebar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %} <title>Appointments</title> {% endblock %}
+    {% load static %}
+    {% block content %}
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            min-height: 100vh;
+            background: #ecf0f3;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .text-center {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #31344b;
+            text-shadow: -1px -1px 2px #ffffff, 1px 1px 2px #ceced1;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .wrapper {
+            position: relative;
+            width: 290px;
+            padding: 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #ecf0f3;
+            box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+        }
+        .name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #31344b;
+            margin: 10px 0 5px 0;
+        }
+        .about {
+            color: #44476a;
+            font-weight: 400;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .buttons {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+        .buttons button, .buttons a {
+            width: auto;
+            border: none;
+            outline: none;
+            padding: 12px 6px;
+            color: #31344b;
+            font-size: 14px;
+            font-weight: 400;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: -2px -2px 5px #ffffff, 2px 2px 4px #ceced1;
+            background: #ecf0f3;
+            transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .buttons button:hover, .buttons a:hover {
+            background: #007bff;
+            color: #ffffff;
+            box-shadow: -3px -3px 7px #ffffff, 3px 3px 7px #31344b;
+            transform: translateY(-1px);
+        }
+        .buttons .disabled {
+    background: #d3d3d3;
+    cursor: not-allowed;
+    color: #a9a9a9;
+    pointer-events: none;
+    box-shadow: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+.buttons .disabled:hover {
+    background: #a9a9a9; /* Dark grey hover effect */
+    color: #ffffff;
+}
+
+.buttons button:not(.disabled):hover, 
+.buttons a:not(.disabled):hover {
+    background: #007bff;
+    color: #ffffff;
+    box-shadow: -3px -3px 7px #ffffff, 3px 3px 7px #31344b;
+    transform: translateY(-1px);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Scheduled Appointment Slots</h2>
+    </div>
+    
+    {% if booked_slots %}
+    <div class="container">
+        <h3>Booked Appointments</h3>
+        <br>
+        <div class="card-container">
+            {% for slot in booked_slots %}
+            <div class="wrapper" 
+     data-slot-id="{{ slot.id }}"
+     data-slot-start-time="{{ slot.date|date:'Y-m-d' }}T{{ slot.start_time|date:'H:i:s' }}" 
+     data-slot-end-time="{{ slot.date|date:'Y-m-d' }}T{{ slot.end_time|date:'H:i:s' }}">
+    <div class="name">{{ slot.specialization }}</div>
+    <div class="name">Date: {{ slot.date }}</div>
+    <div class="name">Price: {{ slot.amount }} INR</div>
+    <div class="name">Time: {{ slot.start_time }} - {{ slot.end_time }}</div>
+    <div class="name">Status: {{ slot.get_status_display }}</div>
+    <div class="name">Meet ID: {{ slot.meet_id }}</div>
+    <div class="buttons">
+        <a id="join-meeting-{{ slot.id }}" class="join-meeting-button disabled" 
+           href="/vcall/meeting/?roomID={{ slot.meet_id }}" target="_blank">Join Meeting</a>
+        <a href="{% url 'update_appointment_slot' slot.id %}">Update</a>
+    </div>
+</div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentTime = new Date(); // Current date and time
+    
+            // Ensure that the current time is in ISO format (ISO 8601)
+            console.log("Current Time:", currentTime);
+    
+            const slots = document.querySelectorAll('.wrapper');
+    
+            slots.forEach(slot => {
+                const startDateTimeString = slot.getAttribute('data-slot-start-time'); // Data attribute for start date and time
+                const endDateTimeString = slot.getAttribute('data-slot-end-time'); // Data attribute for end date and time
+                const joinButton = document.getElementById(`join-meeting-${slot.getAttribute('data-slot-id')}`);
+    
+                // Convert the start and end times to Date objects (assuming they are in ISO format)
+                const startTime = new Date(startDateTimeString);
+                const endTime = new Date(endDateTimeString);
+    
+                console.log("Start Time:", startTime);
+                console.log("End Time:", endTime);
+    
+                // Check if the current time is between start and end time
+                if (currentTime >= startTime && currentTime <= endTime) {
+                    joinButton.classList.remove("disabled");
+                    joinButton.style.pointerEvents = "auto"; // Allow clicking
+                } else {
+                    joinButton.classList.add("disabled");
+                    joinButton.style.pointerEvents = "none"; // Disable clicking
+                }
+            });
+        });
+    </script>
+    
+    
+
+    {% if available_slots %}
+    <div class="container">
+        <h3>Available Appointments</h3>
+        <br>
+        <div class="card-container">
+            {% for slot in available_slots %}
+            <div class="wrapper">
+                <div class="name">{{ slot.specialization }}</div>
+                <div class="name">Date: {{ slot.date }}</div>
+                <div class="name">Price: {{ slot.amount }} INR</div>
+                <div class="name">Time: {{ slot.start_time }} - {{ slot.end_time }}</div>
+                <div class="name">Status: {{ slot.get_status_display }}</div>
+                <div class="buttons">
+                    <a href="{% url 'update_appointment_slot' slot.id %}">Update</a>
+                    <a href="{% url 'delete_appointment_slot' slot.id %}" onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if not available_slots and not booked_slots %}
+    <div class="container">
+        <p>No appointment slots scheduled yet.</p>
+    </div>
+    {% endif %}    
+</body>
+</html>
+{% endblock %}

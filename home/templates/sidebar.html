@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %} <title>Samvidhan Connect</title> {% endblock %}
+    <link rel="stylesheet" href="{% static 'base_style.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/92e7701be1.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Sidebar Styling */
+        .sidebar {
+            width: 60px; /* Default width when not hovered */
+            background-color: #f4f5f7;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s ease;
+            overflow: hidden; /* Prevent content from overflowing */
+            padding-top: 10px; /* To account for header height */
+            z-index: 100;
+        }
+
+        .sidebar:hover {
+            width: 220px; /* Expanded width on hover */
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            font-size: 16px;
+            color: #555;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar .menu-item i {
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .sidebar .menu-item .menu-text {
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar:hover .menu-item .menu-text {
+            opacity: 1;
+        }
+
+        .sidebar .menu-item:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .sidebar .menu-item.active {
+            background-color: #f4f5f7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .logo {
+    display: flex; /* Flexbox for alignment */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 60px; /* Matches header height */
+    text-decoration: none; /* Remove underline */
+}
+
+.logo img {
+    width: 40px; /* Initial logo size */
+    height: 40px;
+    object-fit: contain;
+    transition: opacity 0.3s ease; /* Smooth fade effect */
+}
+
+.logo .logo-text {
+    position: absolute;
+    font-size: 13px;
+    font-weight: bold;
+    color: #000; /* Adjust to match design */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth fade effect */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.logo:hover img {
+    opacity: 0; /* Hide the logo on hover */
+}
+
+.logo:hover .logo-text {
+    opacity: 1; /* Show the text on hover */
+}
+
+
+
+    </style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <a href="/" class="logo">
+            <img src="{% static 'images/Logo.png' %}" alt="logo">
+            <span class="logo-text">Samvidhan Connect</span>
+        </a>
+        <a href="/" class="menu-item">
+            <i class=""></i>
+            <span class="menu-text"></span>
+        </a>
+        <a href="/" class="menu-item active">
+            <i class="fas fa-home"></i>
+            <span class="menu-text">Home</span>
+        </a>
+        <a href="{% url 'view_profile' username=request.user.username %}" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span class="menu-text">My Profile</span>
+        </a>
+        {% if request.user.users.role == 'lawyer' %}
+        <a href="{% url 'schedule_appointment' %}" class="menu-item">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="menu-text">Schedule</span>
+        </a>
+        <a href="{% url 'lawyer_appointments' %}" class="menu-item">
+            <i class="fas fa-list-alt"></i>
+            <span class="menu-text">View Appointments</span>
+        </a>
+        {% else %}
+        <a href="{% url 'client_d' %}" class="menu-item">
+            <i class="fas fa-comments"></i>
+            <span class="menu-text">Book Appointment</span>
+        </a>
+        <a href="{% url 'view_appointments' %}" class="menu-item">
+            <i class="fas fa-list-alt"></i>
+            <span class="menu-text">View Appointments</span>
+        </a>
+         {% endif %}
+        
+        <a href="{% url 'wikipedia' %}" class="menu-item">
+            <i class="fa-brands fa-wikipedia-w"></i>
+            <span class="menu-text">Wikipedia</span>
+        </a>
+        <a href="{% url 'learn_more' %}" class="menu-item">
+            <i class="fas fa-file-alt"></i>
+            <span class="menu-text">Learn More</span>
+        </a>
+        <a href="https://www.constitutionofindia.net/" target="_blank" class="menu-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="menu-text">External Resources</span>
+        </a>
+        <a href="https://legislative.gov.in/constitution-of-india/" target="_blank" class="menu-item">
+            <i class="fa-solid fa-globe"></i>
+            <span class="menu-text">Official Website</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-question-circle"></i>
+            <span class="menu-text">Help</span>
+        </a>
+    </nav>
+    <div id="django-messages" data-messages='[
+    {% for message in messages %}
+    {
+        "tag": "{{ message.tags|escapejs }}",
+        "text": "{{ message|escapejs }}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+]'></div>
+
+    {% block content %}
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Content Goes Here -->
+    </div>
+    {% endblock %}
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+
+    <script>
+        const profileIcon = document.getElementById('profile-icon');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        profileIcon.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!profileIcon.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+        document.querySelector('.sidebar').addEventListener('mouseover', () => {
+            document.querySelector('.sidebar').classList.add('expanded');
+        });
+
+        document.querySelector('.sidebar').addEventListener('mouseout', () => {
+            document.querySelector('.sidebar').classList.remove('expanded');
+        });        
+    </script>
+    <script>
+            alertify.defaults = {
+        notifier: {
+            position: 'top-right' ,// Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'
+            delay:3  
+        }
+    };
+        document.addEventListener("DOMContentLoaded", function() {
+            const messagesDiv = document.getElementById('django-messages');
+            const djangoMessages = JSON.parse(messagesDiv.dataset.messages);
+    
+            djangoMessages.forEach(function(msg) {
+                if (alertify[msg.tag]) {
+                    alertify[msg.tag](msg.text);
+                } else {
+                    alertify.message(msg.text); // Default for unsupported tags
+                }
+            });
+        });
+    </script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2024/11/11/13/20241111132631-XZ574B2P.js"></script>
+</body>
+</html>

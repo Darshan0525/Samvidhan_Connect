@@ -1,0 +1,38 @@
+{% extends 'sidebar.html' %}
+
+{% block title %} <title>Wikipedia</title> {% endblock %}
+
+{% block content %}
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Hides the browser's scrollbar */
+        height: 100%; /* Ensures full viewport height */
+    }
+
+    body {
+        position: relative;
+        background-color: #f8f9fa; /* Light background */
+    }
+
+    .iframe-container {
+        display: flex;
+        justify-content: right; /* Align iframe to the right */
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+        margin-top: 0; /* Ensure no top margin */
+    }
+
+    iframe {
+        width: 98%; /* Covers 98% of the container width */
+        height: 100%;
+        border: none; /* Removes border */
+    }
+</style>
+
+<div class="iframe-container">
+    <iframe src="https://en.wikipedia.org/wiki/Constitution_of_India"></iframe>
+</div>
+
+{% endblock %}

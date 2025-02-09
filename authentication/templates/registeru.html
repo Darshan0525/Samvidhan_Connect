@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Samvidhan Connect</title>
+
+    <!--Boxicons CDN-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="{% static 'styles/registeru.css' %}">
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+</head>
+<body>
+    
+    <div class="wrapper">
+
+        <span class="rotate-bg"></span>
+        <span class="rotate-bg2"></span>
+
+        <div class="form-box login">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="client">
+                <div class="input-box animation" style="--i:1; --j:22">
+                    <input type="text" name="first_name" required>
+                    <label for="">First name</label>
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="input-box animation" style="--i:2; --j:23">
+                    <input type="text" name="last_name" required>
+                    <label for="">Last Name</label>
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="input-box animation" style="--i:3; --j:24">
+                    <input type="text" name="user_name" required>
+                    <label for="">Username</label>
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="input-box animation" style="--i:4; --j:25">
+                    <input type="Email" name="email" required>
+                    <label for="">Email</label>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+
+                <div class="input-box animation" style="--i:5; --j:26">
+                    <input type="password" name="password" required>
+                    <label for="">Password</label>
+                    <i class='bx bxs-lock-alt' ></i>
+                </div>
+
+
+                <button type="submit" class="btn animation" style="--i:6; --j:27">Sign Up</button>
+
+                <div class="linkTxt animation" style="--i:7; --j:28">
+                    <p>Register as Lawyer? <a class="register-link">GO -></a> or <a href="/auth/login" class="register-link">  Login</a></p>
+                </div>
+                
+            </form>
+        </div>
+
+        <div class="info-text login">
+            <h2 class="animation" style="--i:0; --j:20">Welcome Back!</h2>
+            <p class="animation" style="--i:1; --j:21">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+
+        <div class="form-box register">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="lawyer">
+                <div class="input-box animation" style="--i:18; --j:1">
+                    <input type="text" name="first_name" required>
+                    <label for="">First Name</label>
+                    <i class='bx bxs-user'></i>
+                </div>
+
+                <div class="input-box animation" style="--i:19; --j:2">
+                    <input type="text" name="last_name" required>
+                    <label for="">Last Name</label>
+                    <i class='bx bxs-user'></i>
+                </div>
+
+                <div class="input-box animation" style="--i:20; --j:3">
+                    <input type="text" name="user_name" required>
+                    <label for="">Username</label>
+                    <i class='bx bxs-user'></i>
+                </div>
+
+
+                <div class="input-box animation" style="--i:21; --j:4">
+                    <input type="email" name="email" required>
+                    <label for="">Email</label>
+                    <i class='bx bxs-envelope' ></i>
+                </div>
+
+                <div class="input-box animation" style="--i:22; --j:5">
+                    <input type="password" name="password" required>
+                    <label for="">Password</label>
+                    <i class='bx bxs-lock-alt' ></i>
+                </div>
+
+                <div class="input-box animation" style="--i:23; --j:6">
+                    <input type="text" name="specialization" required>
+                    <label for="">Specialization</label>
+                    <i class='bx bxs-id-card'></i>
+                </div>
+
+                <div class="input-box animation" style="--i:24; --j:7">
+                    <input type="password" name="experience_years" required>
+                    <label for="">Experience years</label>
+                    <i class='bx bxs-buildings'></i>
+                </div>
+
+                <button type="submit" class="btn animation" style="--i:21;--j:4">Sign Up</button>
+
+                <div class="linkTxt animation" style="--i:22; --j:5">
+                    <p>Register as Client? <a  class="login-link"><- GO</a></p>
+                </div>
+                
+            </form>
+        </div>
+
+
+        <div class="info-text register">
+            <h2 class="animation" style="--i:17; --j:0;">Welcome Back!</h2>
+            <p class="animation" style="--i:18; --j:1;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!--Script.js-->
+    <script src="{% static 'js/app.js'%}"></script>  
+
+</body>
+</html>

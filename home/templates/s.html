@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 80%; /* Responsive width */
+            max-width: 700px; /* Increased max width */
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 50px;
+            color: #4caf50;
+        }
+
+        h1 {
+            color: #4caf50;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .payment-details {
+            text-align: left;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+        }
+
+        .payment-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+
+        .btn a {
+            display: inline-block; /* Makes the link act like a button */
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none; /* Removes underline */
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn a:hover {
+            background-color: #0056b3;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .contact-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✔</div>
+        <h1>Payment Successful!</h1>
+        <p>Thank you! Your payment has been received.</p>
+        <p>Order ID: <strong>IC-1234, IC-5678</strong> | Transaction ID: <strong>12345</strong></p>
+
+        <p class="info">Please wait for some time for the Appointment Confirmation mail.</p>
+        <div class="btn">
+            <a href="/">OK</a>
+        </div>
+
+        <p class="contact-info">
+            Please contact us at <a href="tel:1800">1800</a> or email to
+            <a href="mailto:care@samvidhan.com">care@samvidhan.com</a> for any query.
+        </p>
+    </div>
+</body>
+</html>

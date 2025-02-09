@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Samvidhan Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+  <link rel="icon" href="{% static 'images/Logo.png' %}">
+
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Display error messages here -->
+    {% if messages %}
+      <div class="alert" role="alert">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <h2>Login</h2>
+      <div class="input-field">
+        <input type="text" name="email" required>
+        <label>Enter your email</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password" required>
+        <label>Enter your password</label>
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember" name="remember">
+          <p>Remember me</p>
+        </label>
+        <a href="/auth/forgot-password">Forgot password?</a>
+      </div>
+      <button type="submit">Log In</button>
+      <div class="register">
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+      </div>
+    </form>
+
+    <!-- Social Media Sign-in Buttons -->
+    <div class="social-login">
+      <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+      <button class="facebook"><i class="fab fa-facebook-f"></i></button>
+      <button class="twitter"><i class="fab fa-twitter"></i></button>
+      <button class="linkedin"><i class="fab fa-linkedin-in"></i></button>
+    </div>
+  </div>
+
+  <!-- Include FontAwesome for social icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+</html>
