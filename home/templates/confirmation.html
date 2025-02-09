@@ -1,0 +1,13 @@
+{% extends 'sidebar.html' %}
+
+{% block title %} <title>Appointments</title> {% endblock %}
+{% block content %}
+<h2>Payment Details</h2>
+
+{% if payment_status == 'success' %}
+    <p>Payment Successful. Your appointment has been booked.</p>
+{% else %}
+    <p>Payment Canceled. Please try again.</p>
+{% endif %}
+
+{% endblock %}

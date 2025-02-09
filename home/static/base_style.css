@@ -1,0 +1,207 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styling */
+.header {
+    position: fixed; /* Makes the header fixed */
+    top: 0; /* Positions it at the top of the viewport */
+    left: 220px; /* Adjusts for the collapsed sidebar width */
+    width: calc(100% - 219px); /* Ensures it spans the remaining width */
+    background-color: white;
+    height: 101px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensures the header stays on top of other elements */
+    transition: margin-left 0.3s ease;
+}
+
+.header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers content horizontally */
+    flex: 1; /* Ensures it takes up all available space */
+}
+
+.header .logo img {
+    height: 30px;
+}
+
+.header .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0; /* Prevents shrinking of icons */
+}
+
+.header .header-icons .icon {
+    position: relative;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.header .header-icons .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 18px;
+}
+
+.header .header-icons #dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 150px;
+}
+
+.header .header-icons #dropdown-menu.active {
+    display: block;
+}
+
+.header .header-icons #dropdown-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.header .header-icons #dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.logo {
+    display: flex; /* Flexbox for alignment */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 60px; /* Matches header height */
+    text-decoration: none; /* Remove underline */
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+    font-size: 32px; /* Adjust font size */
+    color: #333; /* Text color */
+    text-transform: uppercase; /* Optional: makes text uppercase */
+    letter-spacing: 2px; /* Optional: adjusts spacing between letters */
+}
+
+.logo img {
+    width: 40px; /* Logo size */
+    height: 40px;
+    object-fit: contain;
+}
+
+.logo .logo-text {
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000; /* Adjust to match design */
+    white-space: nowrap; /* Prevent text wrapping */
+    opacity: 1; /* Always visible */
+    transition: none; /* Remove transition effect */
+}
+
+.header .header-icons #profile-icon {
+    width: 60px; /* Set a fixed width for the profile icon container */
+    height: 60px; /* Set a fixed height for the profile icon container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: visible; /* Ensures the image doesn't overflow the container */
+    border-radius: 50%; /* Ensures the container remains circular */
+}
+
+.header .header-icons #profile-icon img {
+    width: 100%; /* Fixed width */
+    height: 100%; /* Fixed height */
+    object-fit: cover; /* Crops the image to fill the circular area */
+    object-position: center; /* Ensures the center of the image is displayed */
+    clip-path: circle(50%); /* Clips the image to a circle */
+    
+}
+
+.sidebar {
+    width: 220px; /* Fixed width */
+    background-color: #f4f5f7;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevent content from overflowing */
+    padding-top: 10px; /* To account for header height */
+}
+
+.sidebar .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    font-size: 16px;
+    color: #555;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .menu-item i {
+    font-size: 18px;
+    min-width: 24px; /* Ensures consistent spacing */
+    text-align: center; /* Centers the icon */
+}
+
+.sidebar .menu-item .menu-text {
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+.sidebar .menu-item:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.sidebar .menu-item.active {
+    background-color: #f4f5f7;
+    color: #333;
+    font-weight: bold;
+}
+
+
+
+/* Main content styling */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.appointments-table th, .appointments-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.appointments-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}

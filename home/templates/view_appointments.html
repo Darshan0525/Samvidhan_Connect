@@ -1,0 +1,184 @@
+{% extends 'sidebar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %} <title>Appointments</title> {% endblock %}
+    {% load static %}
+    {% block content %}
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            min-height: 100vh;
+            background: #ecf0f3;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .wrapper {
+            position: relative;
+            width: 290px;
+            padding: 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #ecf0f3;
+            box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+        }
+        .img-area {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .inner-area {
+            height: calc(100% - 15px);
+            width: calc(100% - 15px);
+            border-radius: 50%;
+        }
+        .inner-area img {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .buttons {
+            margin-top: 15px;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+        .buttons a {
+            width: 100%;
+            padding: 12px 6px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ecf0f3;
+            color: #31344b;
+            font-size: 14px;
+            box-shadow: -2px -2px 5px #ffffff, 2px 2px 4px #ceced1;
+            transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .buttons a:hover {
+            background: #007bff;
+            color: #ffffff;
+            box-shadow: -3px -3px 7px #ffffff, 3px 3px 7px #31344b;
+            transform: translateY(-1px);
+        }
+        .buttons .disabled {
+            background: #d3d3d3;
+            cursor: not-allowed;
+            color: #a9a9a9;
+            pointer-events: none;
+            box-shadow: none;
+            transition: background 0.3s, color 0.3s;
+        }
+        .buttons .disabled:hover {
+            background: #a9a9a9; /* Dark grey hover effect */
+            color: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Booked Appointments</h2>
+    </div>
+
+    {% if appointments_with_profiles %}
+    <div class="card-container">
+        {% for item in appointments_with_profiles %}
+        <div class="wrapper"
+            data-slot-id="{{ item.appointment.slot.id }}"
+            data-slot-start-time="{{ item.appointment.slot.date|date:'Y-m-d' }}T{{ item.appointment.slot.start_time|date:'H:i:s' }}"
+            data-slot-end-time="{{ item.appointment.slot.date|date:'Y-m-d' }}T{{ item.appointment.slot.end_time|date:'H:i:s' }}">
+            <div class="img-area">
+                <div class="inner-area">
+                    <img src="{{ item.profile_picture }}" alt="Profile Image">
+                </div>
+            </div>
+            <div class="name">{{ item.appointment.slot.lawyer.username }}</div>
+            <div class="about">{{ item.appointment.slot.specialization }}</div>
+            <div class="about">Date: {{ item.appointment.slot.date }}</div>
+            <div class="about">Time: {{ item.appointment.slot.start_time }} - {{ item.appointment.slot.end_time }}</div>
+            <div class="about">Price: {{ item.appointment.slot.amount }} INR</div>
+            <div class="buttons">
+                <a id="join-meeting-{{ item.appointment.slot.id }}"
+                   class="join-meeting-button disabled"
+                   href="/vcall/meeting/?roomID={{ item.appointment.slot.meet_id }}"
+                   target="_blank">
+                   Join Meeting
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="container">
+        <p>You have no booked appointments.</p>
+    </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentTime = new Date(); // Get current time in the user's local timezone
+            
+            console.log("Current Time:", currentTime); // Log current time for debugging
+            
+            const slots = document.querySelectorAll('.wrapper');
+            
+            slots.forEach(slot => {
+                const startDateTimeString = slot.getAttribute('data-slot-start-time');
+                const endDateTimeString = slot.getAttribute('data-slot-end-time');
+                const joinButton = document.getElementById(`join-meeting-${slot.getAttribute('data-slot-id')}`);
+                
+                // Convert start and end times to Date objects
+                const startTime = new Date(startDateTimeString);
+                const endTime = new Date(endDateTimeString);
+
+                console.log("Start Time:", startTime);  // Log start time for debugging
+                console.log("End Time:", endTime);  // Log end time for debugging
+                
+                // Enable the button if current time is between start and end time
+                if (currentTime >= startTime && currentTime <= endTime) {
+                    joinButton.classList.remove("disabled");
+                    joinButton.style.pointerEvents = "auto"; // Allow clicking
+                } else {
+                    joinButton.classList.add("disabled");
+                    joinButton.style.pointerEvents = "none"; // Disable clicking
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,294 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %} <title>Samvidhan Connect</title> {% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base_style.css'%}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/92e7701be1.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="{% static 'images/Logo.png' %}">
+
+</head>
+<body>
+    <!-- Top Header -->
+    <div class="header">
+        <div class="logo">
+            <h1>Samvidhan Connect</h1>
+        </div>
+        <div class="header-icons">
+            <div class="icon" id="profile-icon">
+                <img src="{{profile.profile_picture.url}}" alt="Profile" style="border-radius: 50%;">
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <a href="{% url 'view_profile' username=request.user.username %}">Profile</a>
+                    <a href="/auth/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <a href="/" class="logo">
+            <img src="{% static 'images/Logo.png' %}" alt="logo">
+        </a>
+        <a href="#" class="menu-item">
+            <i class=""></i>
+            <span class="menu-text"></span>
+        </a>
+        <a href="/" class="menu-item active">
+            <i class="fas fa-home"></i>
+            <span class="menu-text">Home</span>
+        </a>
+        <a href="{% url 'view_profile' username=request.user.username %}" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span class="menu-text">My Profile</span>
+        </a>
+        {% if request.user.users.role == 'lawyer' %}
+        <a href="{% url 'schedule_appointment' %}" class="menu-item">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="menu-text">Schedule</span>
+        </a>
+        <a href="{% url 'lawyer_appointments' %}" class="menu-item">
+            <i class="fas fa-list-alt"></i>
+            <span class="menu-text">View Appointments</span>
+        </a>
+        {% else %}
+        <a href="{% url 'client_d' %}" class="menu-item">
+            <i class="fas fa-comments"></i>
+            <span class="menu-text">Book Appointment</span>
+        </a>
+        <a href="{% url 'view_appointments' %}" class="menu-item">
+            <i class="fas fa-list-alt"></i>
+            <span class="menu-text">View Appointments</span>
+        </a>
+        {% endif %}
+        <a href="{% url 'wikipedia' %}" class="menu-item">
+            <i class="fa-brands fa-wikipedia-w"></i>
+            <span class="menu-text">Wikipedia</span>
+        </a>
+        <a href="{% url 'learn_more' %}" class="menu-item">
+            <i class="fas fa-file-alt"></i>
+            <span class="menu-text">Learn More</span>
+        </a>
+        <a href="https://www.constitutionofindia.net/" class="menu-item" target="_blank">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="menu-text">External Resources</span>
+        </a>
+        <a href="https://legislative.gov.in/constitution-of-india/" target="_blank" class="menu-item">
+            <i class="fa-solid fa-globe"></i>
+            <span class="menu-text">Official Website</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-question-circle"></i>
+            <span class="menu-text">Help</span>
+        </a>
+    </nav>
+    
+    </nav>
+    {% block content %}
+    <!-- Main Content -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            font-family: Arial, sans-serif;
+            width: 60%; /* Fix the width */
+            /* margin: 0 auto; Center content horizontally */
+            margin-left: 25%;
+            margin-top: 120px;
+        }
+        .section {
+            margin: 20px 0;
+        }
+        .section img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #dee2e6;
+            margin: 10px auto;
+            display: block;
+        }
+        .section-content {
+            padding: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 0;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-content">
+                <H5>The Constitution of India</H5>
+                <p>The Constitution of India is the supreme law of an independent India. It has the distinction of being the longest written constitution of any democratic country on the earth.</p>
+            </div>
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/sDstf8ockUo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+
+        <div class="section" style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px;">
+            <br><br><br><br><br><br><br>
+            <img src="https://culturalsamvaad.com/wp-content/uploads/2020/01/constitution-228x300.jpg" alt="Constitution of India" style="width: 200px; height: 300px; border: 1px solid #ccc; box-shadow: 2px 2px 8px rgba(0,0,0,0.1);">
+            <div class="section-content" style="max-width: 600px;">
+                <H5>Making of the Constitution</H5>
+                <p>The Constitution of independent India represents the will of the people. It was prepared by the Constituent Assembly which began this monumental task in December 1946 in New Delhi and took a little less than three years to complete it. The Constituent Assembly which had 299 members (after the partition of India) discussed and deliberated over each clause of the constitution and arrived at decisions by consensus.</p>
+                <p>The Assembly adopted the Constitution of independent India on the 26th of November 1949 and the Constitution came into effect on the 26th of January 1950.</p>
+            </div>
+        </div>
+        
+
+    <div class="section">
+        
+        <div class="section-content">
+            <H5>The Preamble</H5>
+            <p>The Preamble to the Constitution commences with the magical words – ‘We, the people of India’. It captures the lofty spirit of our Constitution and the ideals and aspirations of Indians. India is a Sovereign. Socialist, Secular, Democratic, Republic, which assures the dignity of the individual and the unity and integrity of the nation. The nation recognises justice, liberty and equality as basic principles of her citizens’ lives and seeks to promote fraternity among them.</p>
+            <p>The Supreme Court of India has upheld that the Preamble is an integral part of the Constitution.</p>
+        </div>
+        <img src="https://culturalsamvaad.com/wp-content/uploads/2020/01/Preamble-eng-01-768x1087.jpg" alt="Preamble Image">
+    </div>
+
+    <div class="section">
+        <div class="section-content">
+            <H5>Fundamental Rights</H5>
+            <p>Fundamental Rights enshrined in Part III (Articles 12-35) of the constitution and are protected and guaranteed by the constitution itself. They are essential for leading a dignified existence as stated in the Preamble and are enforceable in courts of law. Fundamental Rights not only protect individuals from arbitrary, prejudicial, state actions, but also protect them against actions of other individuals. The following Fundamental Rights are guaranteed by the constitution.</p>
+            <H5>1. Right to equality (Articles. 14-18)</H5>
+            <ul>
+                <li>Equality before law.</li>
+                <li>Prohibition of discrimination on grounds of religion, race, caste, sex, or place of birth.</li>
+                <li>Equality of opportunity in matters of public employment.</li>
+                <li>Abolition of Untouchability.</li>
+                <li>Abolition of titles.</li>
+            </ul>
+            <H5>2. Right to freedom (Articles. 19-22)</H5>
+            <ul>
+                <li>Protection of certain rights regarding freedom of speech, etc.:
+                    <ul>
+                        <li>(a) To freedom of speech and expression;</li>
+                        <li>(b) To assemble peaceably and without arms;</li>
+                        <li>(c) To form associations or unions;</li>
+                        <li>(d) To move freely throughout the territory of India;</li>
+                        <li>(e) To reside and settle in any part of the territory of India;</li>
+                        <li>(g) To practise any profession, or to carry on any occupation, trade, or business.</li>
+                    </ul>
+                </li>
+                <li>Protection in respect of conviction for offences.</li>
+                <li>Protection of life and personal liberty.</li>
+                <li>Right to education.</li>
+                <li>Protection against arrest and detention in certain cases.</li>
+                <li>Note: The Supreme Court of India has ruled that the ‘Right to Privacy’ is an integral part of the right to life and personal liberty guaranteed in Article 21 of the Constitution.</li>
+            </ul>
+            <H5>3. Right against exploitation (Articles. 23-24)</H5>
+            <ul>
+                <li>Prohibition of traffic in human beings and forced labour.</li>
+                <li>Prohibition of employment of children in factories, etc.</li>
+            </ul>
+            <H5>4. Right to freedom of religion (Articles. 25-28)</H5>
+            <ul>
+                <li>Freedom of conscience and free profession, practice, and propagation of religion.</li>
+                <li>Freedom to manage religious affairs.</li>
+                <li>Freedom as to payment of taxes for promotion of any particular religion.</li>
+                <li>Freedom as to attendance at religious instruction or religious worship in certain educational institutions.</li>
+            </ul>
+            <H5>5. Cultural and Educational Rights (Articles. 29-30)</H5>
+            <ul>
+                <li>Protection of interests of minorities.</li>
+                <li>Right of minorities to establish and administer educational institutions.</li>
+            </ul>
+            <H5>6. Right to constitutional remedies (Articles. 32-35)</H5>
+            <p>This right deals with remedies for enforcement of rights conferred by Part III. It includes the right to move the courts to issue directions, orders, or writs for enforcement of rights.</p>
+        </div>
+        <img src="https://culturalsamvaad.com/wp-content/uploads/2020/01/Fundamental-Rights-768x959.jpg" alt="Fundamental Rights">
+    </div>
+    
+
+    <div class="section">
+        <div class="section-content">
+            <H5>Directive Principles of State Policy</H5>
+            <p>The Directive Principles of State Policy are not justiciable which means that they are not enforceable by courts of law. They are, however, fundamental in the governance of the nation. It is the duty of the State to strive to apply these precepts in formulating laws to establish a just social order and to promote the welfare of the people.</p>
+            <p>The essence of the Directive Principles is mentioned in Article 38, which reads:</p>
+            <blockquote>
+                “…the State shall strive to promote the welfare of the people by securing and protecting as effectively as it may a social order in which justice, social, economic and political, shall inform all the institutions of the national life.”
+            </blockquote>
+        </div>
+        <img src="https://culturalsamvaad.com/wp-content/uploads/2020/01/Directive-Principles-of-State-Policy-hindi-1-768x978.jpg" alt="Directive Principles">
+    </div>
+    
+
+    <div class="section">
+        
+        <div class="section-content">
+            <H5>Fundamental Duties</H5>
+            <p>Part IV A of the Constitution, inserted by the Constitution (Forty-second Amendment) Act, 1976, lays down non-enforceable ‘Fundamental Duties’ of citizens. The Indian tradition has always regarded rights and duties as complementary to each other. These duties form critical building blocks of the nation.</p>
+        </div>
+<img src="https://culturalsamvaad.com/wp-content/uploads/2020/01/Fundamental-duties-1-768x912.jpg" alt="Fundamental Duties">
+    </div>
+
+    <div class="section">
+        <div class="section-content">
+            <H5>Constitution of India – A Living Document</H5>
+            <p>The Constitution of India is a living document. Multiple amendments have been made to it over the years to accommodate emerging needs and challenges. This dynamism ensures its relevance and adaptability, reflecting the evolving aspirations of the nation.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-content">
+            <H5>References</H5>
+            <ul>
+                <li>Democratic Politics – I. Textbook in Political Science for Class IX. NCERT, 2019-20.</li>
+                <li>Granville Austin: The Indian Constitution: Cornerstone of a Nation. Oxford University Press, India, 2019.</li>
+                <li>Indian Constitution at Work. Textbook in Political Science for Class XI. NCERT, 2019-20.</li>
+                <li>Subhash C. Kashyap: Our Constitution: An Introduction to India’s Constitution and Constitutional Law. National Book Trust, India, 1994.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div id="google_translate_element"></div>
+    <p>&copy; Samvidhan Connect</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en',includedLanguages: 'en,hi,ta,te,ml,kn',autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+    {% endblock %}
+    <script>
+        const profileIcon = document.getElementById('profile-icon');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        profileIcon.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!profileIcon.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+        document.querySelector('.sidebar').addEventListener('mouseover', () => {
+    document.querySelector('.sidebar').classList.add('expanded');
+});
+
+document.querySelector('.sidebar').addEventListener('mouseout', () => {
+    document.querySelector('.sidebar').classList.remove('expanded');
+});
+
+    </script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2024/11/11/13/20241111132631-XZ574B2P.js"></script>
+</body>
+</html>
